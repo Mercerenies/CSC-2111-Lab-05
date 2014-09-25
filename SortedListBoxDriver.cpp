@@ -20,7 +20,7 @@ void addCDs(ListArray<CD>* list, ListBox<CD>* lb)
    //DO THIS
    //iterate over and add the cds to the list box (use lb->addItem)
    
-   while(iter->hasnext())
+   while(iter->hasNext())
    {
    lb->addItem(iter->next());
    }
@@ -35,10 +35,9 @@ void deleteCDs(ListArray<CD>* list)
    //DO THIS  
    //iterate over and delete the cds
 
-   while(iter->hasnext())
+   while(iter->hasNext())
    {
-      list->removeSelectedIndex();
-      iter->getNext();
+      delete iter->next();
    }
 
    delete iter;
@@ -51,7 +50,7 @@ int main(int argc, char* argv[])
    //DO THIS
    //create the sorted linked list (call it sorted_list)
    
-   SortedListLinked<CD>* sorted_list = SortedListLinked<CD>(CD::compare_items);
+   SortedListLinked<CD>* sorted_list = new SortedListLinked<CD>(CD::compare_items);
 
 
    String title("CDs");
@@ -89,6 +88,7 @@ int main(int argc, char* argv[])
    deleteCDs(cds);
    delete cds;
    delete lstCDs;
+   delete sorted_list;
 
    return 0;
 }

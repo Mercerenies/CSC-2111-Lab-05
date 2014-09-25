@@ -150,7 +150,7 @@ NextNode<T>** SortedListLinked<T>::find(T* item)
    //loop to find the correct location to insert/remove item
     
     int cmp = compare_items(item, curr->getItem());
-    while ((curr != NULL) && (cmp < 0)) {
+    while ((curr != NULL) && (cmp > 0)) {
         prev = curr;
         curr = curr->getNext();
         if (curr != NULL)
