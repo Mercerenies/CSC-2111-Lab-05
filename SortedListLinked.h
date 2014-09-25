@@ -14,7 +14,13 @@ class SortedListLinked
    private:
       NextNode<T>* head;
       int sze;
-
+      
+      ///Find the node at which the given item should be inserted, or a matching node if possible.
+      /**
+       * Time: Linear
+       * \pre The parameter should point to a valid T
+       * \post An array of size 2 is returned; the elements of the array may be NULL, but the array itself is always valid
+       */
       NextNode<T>** find(T* item);
 
       //this is how to declare a function pointer using templates
@@ -22,13 +28,51 @@ class SortedListLinked
 
    public:
       //this is how to accept a function pointer as a parameter
+      ///Construct a sorted linked list using the specified comparator.
       SortedListLinked(int (*comp_items) (T* item_1, T* item_2));
+      ///Destruct the sorted linked list.
+      /**
+       * \post Does NOT delete the underlying elements
+       */
       ~SortedListLinked();
+      ///Compute whether the list is empty.
+      /**
+       * Time: Constant
+       * \post No side effects
+       */
       bool isEmpty();
+      ///Compute the number of elements in the list.
+      /**
+       * Time: Constant
+       * \post No side effects
+       */
       int size(); 
+      ///Add the element to the linked list, in the appropriate sorted position.
+      /**
+       * Time: Linear
+       * \pre The parameter should point to a valid T
+       * \post The parameter remains unmodified
+       */
       void add(T* item);
+      ///Remove the element from the linked list. If the element does not exist in the list, nothing happens.
+      /**
+       * Time: Linear
+       * \pre The parameter should point to a valid T
+       * \post The list may be modified
+       */
       void remove(T* item);  //normally, we would use void remove(String* search_key) here
+      ///Get the value at the given index from the list.
+      /**
+       * Time: Linear
+       * \pre 1 < index <= size()
+       * \post The list is unmodified
+       */
       T* get(int index);     //normally, we would use T* get(String* search_key)
+      ///Yield an iterator to the linked list in sequential order.
+      /**
+       * Time: Constant
+       * \post No side effects
+       */
       ListLinkedIterator<T>* iterator();
 
 };
@@ -104,14 +148,14 @@ NextNode<T>** SortedListLinked<T>::find(T* item)
 
    //DO THIS
    //loop to find the correct location to insert/remove item
-
-
-
-
-
-
-
-
+    
+    int cmp = compare_items(item, curr->getItem());
+    while ((curr != NULL) && (cmp < 0)) {
+        prev = curr;
+        curr = curr->getNext();
+        if (curr != NULL)
+            cmp = compare_items(item, curr->getItem());
+    }
 
    //could simply return prev and compute curr, but prev might be null
    //this way results in somewhat simpler code in add and remove
@@ -142,19 +186,15 @@ void SortedListLinked<T>::add(T* item)
 
    //DO THIS
    //adding to the top of the list (check prev)
-   if (           )
+   if (prev == NULL)
    {
-
-
-
-
+        head = node;
+        node->setNext(curr);
    }
    else    //general add
    {
-
-
-
-
+        prev->setNext(node);
+        node->setNext(curr);
    }
 
    sze++;
@@ -187,26 +227,20 @@ void SortedListLinked<T>::remove(T* item)
    int compare = (*compare_items) (item, curr->getItem());
 
    //determine whether the item to be removed is present
-   if (                       )
+   if (compare != 0)
    {
       return;  //item not present
    }
 
    //DO THIS
    //removing the top item (check prev)
-   if (         )
+   if (prev == NULL)
    {
-
-
-
-
+        head = curr->getNext();
    }
    else  //general remove
    {
-
-
-
-
+        prev->setNext(curr->getNext());
    }
 
    delete curr;
