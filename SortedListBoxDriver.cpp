@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
    //DO THIS
    //create the sorted linked list (call it sorted_list)
    
-   SortedListLinked<CD>* sorted_list = SortedListLinked<CD>((CD::compare_items() (cds));
+   SortedListLinked<CD>* sorted_list = SortedListLinked<CD>(CD::compare_items);
 
 
    String title("CDs");
