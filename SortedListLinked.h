@@ -104,14 +104,14 @@ NextNode<T>** SortedListLinked<T>::find(T* item)
 
    //DO THIS
    //loop to find the correct location to insert/remove item
-
-
-
-
-
-
-
-
+    
+    int cmp = compare_items(item, curr->getItem());
+    while ((curr != NULL) && (cmp < 0)) {
+        prev = curr;
+        curr = curr->getNext();
+        if (curr != NULL)
+            cmp = compare_items(item, curr->getItem());
+    }
 
    //could simply return prev and compute curr, but prev might be null
    //this way results in somewhat simpler code in add and remove
@@ -142,19 +142,15 @@ void SortedListLinked<T>::add(T* item)
 
    //DO THIS
    //adding to the top of the list (check prev)
-   if (           )
+   if (prev == NULL)
    {
-
-
-
-
+        head = node;
+        node->setNext(curr);
    }
    else    //general add
    {
-
-
-
-
+        prev->setNext(node);
+        node->setNext(curr);
    }
 
    sze++;
@@ -187,26 +183,20 @@ void SortedListLinked<T>::remove(T* item)
    int compare = (*compare_items) (item, curr->getItem());
 
    //determine whether the item to be removed is present
-   if (                       )
+   if (compare != 0)
    {
       return;  //item not present
    }
 
    //DO THIS
    //removing the top item (check prev)
-   if (         )
+   if (prev == NULL)
    {
-
-
-
-
+        head = curr->getNext();
    }
    else  //general remove
    {
-
-
-
-
+        prev->setNext(curr->getNext());
    }
 
    delete curr;
